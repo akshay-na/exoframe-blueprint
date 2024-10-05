@@ -1,0 +1,75 @@
+{
+  "name": "node-template",
+  "version": "1.0.0",
+  "description": "Template to start a node project",
+  "scripts": {
+    "build:time": "echo '{\"human\":\"'$(date)'\", \"timestamp\":\"'$(date +%s000)'\"}' > dist/build.json",
+    "build": "node build && pnpm build:time",
+    "commit": "cz",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "prepare": "husky",
+    "prebuild": "rimraf dist",
+    "pre-commit": "npx lint-staged",
+    "pre-push": "npm run test:cov",
+    "release": "HUSKY_SKIP_HOOKS=1 CI=true npx -y semantic-release --no-verify",
+    "start": "nodemon src/app/server.ts",
+    "start:prod": "node dist/app/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "lint-staged": {
+    "**/*.ts": ["eslint --fix"],
+    "*.{js,jsx,ts,tsx,json,css,scss,md,yaml,yml}": [
+      "npx prettier --list-different"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "author": "akshay-na",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.21.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@testing-library/jest-dom": "6.5.0",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.7.4",
+    "@types/supertest": "^6.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "commitizen": "^4.3.1",
+    "conventional-commit-types": "^3.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-jsdoc": "50.3.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.6",
+    "jest": "^29.7.0",
+    "jest-junit": "16.0.0",
+    "jest-pnp-resolver": "1.2.3",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "semantic-release": "^24.1.2",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.6.2"
+  }
+}

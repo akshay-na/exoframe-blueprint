@@ -1,0 +1,38 @@
+# Ignore version control directories
+.git
+.gitignore
+.svn
+.hg
+
+# Ignore build and log files
+node_modules
+npm-debug.log
+yarn-error.log
+dist
+build
+temp
+
+# Ignore configuration files that are not needed in the container
+*.md
+LICENSE
+.dockerignore
+Dockerfile
+*.yml
+*.yaml
+*.json
+.editorconfig
+*.env*
+!*.env.production
+
+# Ignore testing, benchmarking, and other non-production files
+test
+tests
+coverage
+benchmark
+examples
+docs
+
+# Ignore specific files that may contain sensitive information or are not required
+*.pem
+*.log
+*.key
