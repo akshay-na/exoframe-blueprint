@@ -60,7 +60,16 @@ module.exports = {
   clearMocks: true,
 
   // Optional: Integration with reporting tools or custom reporters
-  reporters: ["default", "jest-junit"],
+  reporters: [
+    "default",
+    [
+      "jest-junit",
+      {
+        outputDirectory: "./coverage/junit", // where to output the test results
+        outputName: "jest-junit.xml", // file name of the output
+      },
+    ],
+  ],
 
   // Optional: Use verbose output to improve readability of test results
   verbose: true,
