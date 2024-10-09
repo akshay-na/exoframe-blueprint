@@ -1,38 +1,45 @@
 # Ignore version control directories
 .git
-.gitignore
 .svn
 .hg
 
-# Ignore build and log files
-node_modules
+# Ignore logs and lock files
 npm-debug.log
 yarn-error.log
+*.log
+
+# Ignore build directories
+node_modules
 dist
 build
 temp
+tmp
+.cache
 
-# Ignore configuration files that are not needed in the container
-*.md
-LICENSE
-.dockerignore
-Dockerfile
-*.yml
-*.yaml
-*.json
-.editorconfig
-*.env*
-!*.env.production
-
-# Ignore testing, benchmarking, and other non-production files
+# Ignore documentation, examples, and tests
+docs
+examples
 test
 tests
 coverage
 benchmark
-examples
-docs
 
-# Ignore specific files that may contain sensitive information or are not required
+# Ignore configuration and environment files that should not be copied into the container
+*.env
+!*.env.production # Allow the production environment config
 *.pem
-*.log
 *.key
+
+# Ignore unnecessary files that are not needed in the container
+LICENSE
+*.md
+.editorconfig
+.vscode
+.idea
+
+# Avoid ignoring essential Docker-related files
+!.dockerignore
+!Dockerfile
+
+# Optional: if you need docker-compose.yml, allow it
+!docker-compose.yml
