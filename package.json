@@ -1,15 +1,13 @@
 {
-  "name": "node-template",
+  "name": "express-js-boilerplate",
   "version": "1.0.0",
-  "description": "Template to start a node project",
+  "description": "Boilerplate to start a node project",
   "scripts": {
-    "build:time": "echo '{\"human\":\"'$(date)'\", \"timestamp\":\"'$(date +%s000)'\"}' > dist/build.json",
-    "build": "node build && pnpm build:time",
+    "build": "ts-node build",
     "commit": "cz",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "prepare": "husky",
-    "prebuild": "rimraf dist",
     "pre-commit": "npx lint-staged",
     "pre-push": "npm run test:cov",
     "release": "HUSKY_SKIP_HOOKS=1 CI=true npx -y semantic-release --no-verify",
