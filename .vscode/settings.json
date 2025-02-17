@@ -29,5 +29,23 @@
   // Extension Specfic Settings
   "trailing-spaces.trimOnSave": true,
   "prettier.configPath": "./.prettierrc",
-  "prettier.requireConfig": true
+  "prettier.requireConfig": true,
+
+  // Langauge Specific Settings
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  }
 }
