@@ -112,22 +112,6 @@ function semanticReleaseTask(done) {
    ==================== */
 
 /**
- * Test Task:
- * Runs unit tests using Jest.
- * Ensure you have a jest.config.js in your project root.
- */
-function test(done) {
-  exec("jest --coverage --config jest.config.js", (err, stdout, stderr) => {
-    if (err) {
-      notify.onError("Jest Error: <%= error.message %>")(err);
-      return done(err);
-    }
-    console.log(stdout);
-    done();
-  });
-}
-
-/**
  * Format Task:
  * Formats your code using Prettier.
  */
@@ -157,7 +141,6 @@ gulp.task("publish", publishNpm);
 gulp.task("semantic-release", semanticReleaseTask);
 
 // Development tasks
-gulp.task("test", test);
 gulp.task("format", format);
 
 // Composite tasks

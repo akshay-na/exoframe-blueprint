@@ -13,7 +13,11 @@
     "release": "HUSKY_SKIP_HOOKS=1 CI=true npx -y semantic-release --no-verify",
     "start": "env NODE_ENV=development nodemon src/app/server.ts",
     "start:prod": "node dist/app/server.js",
-    "test": "gulp test"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "lint-staged": {
     "**/*.ts": ["eslint --fix"],
