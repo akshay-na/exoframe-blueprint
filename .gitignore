@@ -68,15 +68,14 @@ $RECYCLE.BIN/
 /.vscode-test
 
 # Environment files (protect secrets)
-/.env
-/.env.*
+**/.env
 .env.*.local
 .env.local
 .env.development
 .env.test
 .env.production
 .env.staging
-.env.example
+!.env.example
 
 # Build artifact files
 /.sass-cache/

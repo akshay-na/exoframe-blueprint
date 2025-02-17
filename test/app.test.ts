@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../src/app/app"; // Make sure to correctly point to your app
+import app from "../src/app/App"; // Make sure to correctly point to your app
 
 describe("GET /", () => {
   it("should respond with Hello World!", async () => {
