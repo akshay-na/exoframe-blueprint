@@ -11,8 +11,8 @@
     "pre-commit": "npx lint-staged",
     "pre-push": "npm run test:cov",
     "release": "HUSKY_SKIP_HOOKS=1 CI=true npx -y semantic-release --no-verify",
-    "start": "env NODE_ENV=development nodemon src/app/server.ts",
-    "start:prod": "node dist/app/server.js",
+    "start": "env NODE_ENV=development nodemon -r tsconfig-paths/register -r ts-node/register src/app/servers/BoilerplateServer.ts",
+    "start:prod": "node dist/app/servers/BoilerplateServer.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -33,11 +33,16 @@
   "author": "akshay-na",
   "license": "ISC",
   "dependencies": {
+    "compression": "1.8.0",
+    "cookie-parser": "1.4.7",
+    "cors": "2.8.5",
     "dotenv": "16.4.5",
     "express": "4.21.0",
+    "express-fileupload": "1.5.1",
     "helmet": "8.0.0",
     "joi": "17.13.3",
     "mongoose": "8.7.0",
+    "passport": "0.7.0",
     "reflect-metadata": "0.2.2"
   },
   "devDependencies": {
