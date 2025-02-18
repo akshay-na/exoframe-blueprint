@@ -1,7 +1,7 @@
 {
   "version": "1.1.0",
   "compilerOptions": {
-    "lib": ["es2019", "dom"],
+    "lib": ["ES2024", "dom"],
     "preserveSymlinks": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -23,7 +23,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "ES2024",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",

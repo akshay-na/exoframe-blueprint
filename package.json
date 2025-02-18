@@ -42,10 +42,10 @@
     "helmet": "8.0.0",
     "joi": "17.13.3",
     "mongoose": "8.7.0",
-    "passport": "0.7.0",
-    "reflect-metadata": "0.2.2"
+    "passport": "0.7.0"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "7.26.0",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@semantic-release/changelog": "^6.0.3",
@@ -85,6 +85,7 @@
     "lint-staged": "^15.2.10",
     "nodemon": "3.1.7",
     "prettier": "^3.3.3",
+    "reflect-metadata": "0.2.2",
     "semantic-release": "^24.1.2",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
