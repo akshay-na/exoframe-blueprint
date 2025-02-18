@@ -3,8 +3,10 @@
 import { exec } from "child_process";
 import * as del from "del";
 import gulp from "gulp";
+import gulpCached from "gulp-cached";
 import notify from "gulp-notify";
 import plumber from "gulp-plumber";
+import gulpRemember from "gulp-remember";
 import ts from "gulp-typescript";
 import uglify from "gulp-uglify";
 
@@ -51,8 +53,10 @@ function scripts() {
     .pipe(
       plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
     )
+    .pipe(gulpCached("scripts"))
     .pipe(tsProject())
     .js // Get the JavaScript output
+    .pipe(gulpRemember("scripts"))
     .pipe(uglify())
     .pipe(gulp.dest("dist"));
 }
