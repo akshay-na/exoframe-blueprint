@@ -3,11 +3,11 @@
 
 import dotenv from "dotenv";
 import fs from "fs";
-import Path from "path";
 
 import { LooseObject } from "./LooseObject";
 
 import { InvalidValue } from "./errors";
+import { PathUtils } from "./PathUtils";
 import {
   EnvironmentType,
   ParseSpec,
@@ -67,7 +67,7 @@ export class Environment {
 
   protected bootstrap(): boolean {
     // load the appropriate environment file
-    const envFile = Path.resolve(process.cwd(), `.env.${this.type}`);
+    const envFile = PathUtils.path(`.env.${this.type}`);
     if (fs.existsSync(envFile)) {
       console.info(`[Environment(${this.type})] USING '${envFile}' FILE`);
       dotenv.config({ path: envFile });

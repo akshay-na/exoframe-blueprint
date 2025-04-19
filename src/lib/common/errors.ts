@@ -6,3 +6,9 @@ export class InvalidValue extends RuntimeError {
     super("INVALID_VALUE", info);
   }
 }
+
+export class Todo extends RuntimeError {
+  constructor(info?: LooseObject) {
+    super("TODO", info);
+  }
+}
