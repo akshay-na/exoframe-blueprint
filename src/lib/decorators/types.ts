@@ -1,4 +1,3 @@
-import { NextFunction, Request, Response } from "express";
 import { CapabilitySpec } from "../express/types";
 
 export interface RouteOptions {
@@ -18,9 +17,4 @@ export interface RouterOptions {
   capabilities: CapabilitySpec[];
 }
 
-export interface RouteDefinition {
-  path: string;
-  requestMethod: "get" | "post" | "put" | "delete" | "patch";
-  methodName: string;
-  middlewares: Array<(req: Request, res: Response, next: NextFunction) => void>;
-}
+export type HttpMthods = "GET" | "POST" | "PUT" | "DELETE";

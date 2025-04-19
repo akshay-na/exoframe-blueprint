@@ -1,5 +1,6 @@
-import { RouteOptions } from "./types";
 // src/lib/decorators/RouteDecorators.ts
+
+import { HttpMthods } from "./types";
 
 /**
  * Declares the base path and version for the route.
@@ -22,29 +23,49 @@ export function RouteDescription(description: string) {
 /**
  * Marks the route as discoverable by a router with a matching tag.
  */
-export function Discoverable(routeId: string) {
+function Discoverable(routeId: string) {
   return function (target: any) {
-    Reflect.defineMetadata("route:discoverable", routeId, target);
+    // Register the route as discoverable
+    Reflect.defineMetadata("discoverable", routeId, target);
+
+    // Automatically register the routes when the class is loaded
+    const serviceRoute = Reflect.getMetadata("serviceRoute", target);
+    const routeDescription = Reflect.getMetadata("routeDescription", target);
+    const endpoints = Reflect.getMetadata("endpoints", target);
+
+    if (!endpoints) return;
+
+    const routeInstance = new target();
+
+    // Register each endpoint dynamically on the route instance's router
+    endpoints.forEach(
+      (endpoint: { method: string; propertyKey: string; hints: string[] }) => {
+        const handler = routeInstance[endpoint.propertyKey].bind(routeInstance);
+        routeInstance.router[endpoint.method.toLowerCase()](
+          serviceRoute.path,
+          handler
+        );
+        console.log(
+          `Registered route: ${serviceRoute.path} [${endpoint.method}]`
+        );
+      }
+    );
   };
 }
 
 /**
  * Specifies the HTTP method for this endpoint.
  */
-export function Endpoint(
-  method: "GET" | "POST" | "PUT" | "DELETE",
-  options?: { hints?: string[] }
-) {
+function Endpoint(method: HttpMthods, options: { hints: string[] }) {
   return function (target: any, propertyKey: string) {
-    Reflect.defineMetadata("endpoint:method", method, target, propertyKey);
-    if (options?.hints) {
-      Reflect.defineMetadata(
-        "endpoint:hints",
-        options.hints,
-        target,
-        propertyKey
-      );
-    }
+    const existingEndpoints =
+      Reflect.getMetadata("endpoints", target.constructor) || [];
+    existingEndpoints.push({
+      method,
+      propertyKey,
+      hints: options.hints,
+    });
+    Reflect.defineMetadata("endpoints", existingEndpoints, target.constructor);
   };
 }
 
