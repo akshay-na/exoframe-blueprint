@@ -1,102 +1,47 @@
-// src/lib/decorators/RouteDecorators.ts
+// src/lib/decorators/endpoint.ts
+import "reflect-metadata";
+import { RuntimeError } from "../common/RuntimeError";
+import { EndpointConfig, EndpointDef, ErrorMap, HttpVerb } from "./types";
 
-import { HttpMthods } from "./types";
+export const ENDPOINTS_KEY = Symbol("endpoints");
+export const BASE_PATH_KEY = Symbol("basePath");
+export const DISCOVERABLE_KEY = Symbol("discoverableTag");
+export const ARG_MAP_KEY = Symbol("argMap");
+export const CONFIG_KEY = Symbol("endpointConfig");
+export const ERROR_MAP_KEY = Symbol("errorMap");
 
-/**
- * Declares the base path and version for the route.
- */
-export function Route(path: string, options?: { version?: string }) {
-  return function (target: any) {
-    Reflect.defineMetadata("route:path", path, target);
-    if (options?.version) {
-      Reflect.defineMetadata("route:version", options.version, target);
-    }
+export function Endpoint(verb: HttpVerb, options?: Record<string, unknown>) {
+  return (target: object, prop: string | symbol) => {
+    const eps: EndpointDef[] =
+      Reflect.getMetadata(ENDPOINTS_KEY, target.constructor) ?? [];
+    eps.push({ verb, options, handlerName: prop });
+    Reflect.defineMetadata(ENDPOINTS_KEY, eps, target.constructor);
   };
 }
 
-export function RouteDescription(description: string) {
-  return function (target: any) {
-    Reflect.defineMetadata("route:description", description, target);
-  };
+export function Route(basePath: string) {
+  return <T extends { new (...args: any[]): {} }>(ctr: T) =>
+    Reflect.defineMetadata(BASE_PATH_KEY, basePath, ctr);
 }
 
-/**
- * Marks the route as discoverable by a router with a matching tag.
- */
-function Discoverable(routeId: string) {
-  return function (target: any) {
-    // Register the route as discoverable
-    Reflect.defineMetadata("discoverable", routeId, target);
-
-    // Automatically register the routes when the class is loaded
-    const serviceRoute = Reflect.getMetadata("serviceRoute", target);
-    const routeDescription = Reflect.getMetadata("routeDescription", target);
-    const endpoints = Reflect.getMetadata("endpoints", target);
-
-    if (!endpoints) return;
-
-    const routeInstance = new target();
-
-    // Register each endpoint dynamically on the route instance's router
-    endpoints.forEach(
-      (endpoint: { method: string; propertyKey: string; hints: string[] }) => {
-        const handler = routeInstance[endpoint.propertyKey].bind(routeInstance);
-        routeInstance.router[endpoint.method.toLowerCase()](
-          serviceRoute.path,
-          handler
-        );
-        console.log(
-          `Registered route: ${serviceRoute.path} [${endpoint.method}]`
-        );
-      }
-    );
-  };
+export function Discoverable(tag: string) {
+  if (!tag || tag.includes("/"))
+    throw new RuntimeError("Discoverable tag must be non‑empty without “/”");
+  return <T extends { new (...args: any[]): {} }>(ctr: T) =>
+    Reflect.defineMetadata(DISCOVERABLE_KEY, tag, ctr);
 }
 
-/**
- * Specifies the HTTP method for this endpoint.
- */
-function Endpoint(method: HttpMthods, options: { hints: string[] }) {
-  return function (target: any, propertyKey: string) {
-    const existingEndpoints =
-      Reflect.getMetadata("endpoints", target.constructor) || [];
-    existingEndpoints.push({
-      method,
-      propertyKey,
-      hints: options.hints,
-    });
-    Reflect.defineMetadata("endpoints", existingEndpoints, target.constructor);
-  };
+export function ArgumentMapping(parts: string[]) {
+  return (target: object, prop: string | symbol) =>
+    Reflect.defineMetadata(ARG_MAP_KEY, parts, target, prop);
 }
 
-/**
- * Maps the arguments from the request to the endpoint method.
- */
-export function ArgumentMapping(mapping: Array<any>) {
-  return function (target: any, propertyKey: string) {
-    Reflect.defineMetadata("endpoint:arguments", mapping, target, propertyKey);
-  };
+export function Configuration(cfg: EndpointConfig) {
+  return (t: object, p: string | symbol) =>
+    Reflect.defineMetadata(CONFIG_KEY, cfg, t, p);
 }
 
-export function Configuration(options: {
-  access: string;
-  guard: { rights: string };
-}) {
-  return function (target: any, propertyKey: string) {
-    Reflect.defineMetadata(
-      "endpoint:configuration",
-      options,
-      target,
-      propertyKey
-    );
-  };
-}
-
-/**
- * Maps error codes to HTTP status codes.
- */
-export function ErrorMapping(mapping: object): MethodDecorator {
-  return (target, propertyKey, descriptor) => {
-    Reflect.defineMetadata("route:errorMapping", mapping, descriptor.value!);
-  };
+export function ErrorMapping(map: ErrorMap) {
+  return (t: object, p: string | symbol) =>
+    Reflect.defineMetadata(ERROR_MAP_KEY, map, t, p);
 }

@@ -1,200 +1,145 @@
-// src/lib/Express/ExpressRouter.ts
-import { RouterOptions } from "@/lib/decorators/types";
-import { CapabilitySpec } from "@/lib/express/types";
-import bodyParser from "body-parser";
-import glob from "glob";
-import helmet from "helmet";
-import passport from "passport";
-import path from "path";
-import "reflect-metadata";
+// src/lib/ExpressRouter.ts
+import express, {
+  NextFunction,
+  Request,
+  RequestHandler,
+  Response,
+  Router,
+} from "express";
+import util from "util";
 
+import { ARG_MAP_KEY, ERROR_MAP_KEY } from "../decorators/RouteDecorators";
+import { resolveArguments } from "../http/ArgumentResolver";
+import { translateError } from "../http/ErrorTranslator";
+import { sendEnvelope } from "../http/ResponseFormatter";
+
+/**
+ * Base class for every tagged router.
+ *  –  Single‑responsibility: orchestration only.
+ *  –  Extensible debug hooks (request/response dump).
+ */
 export abstract class ExpressRouter {
-  protected app: any; // the express app instance (created elsewhere with: const app = express())
-  protected options: RouterOptions;
+  /** toggle at ctor, env or subclass (default off) */
+  protected readonly debug: boolean;
 
-  constructor(app: any) {
-    this.app = app;
+  readonly tag: string;
+  readonly basePath: string;
+  readonly router: Router;
 
-    // Retrieve router options from metadata applied by the RouterDecorator.
-    this.options = Reflect.getMetadata("router:options", this.constructor);
+  /* ───────── constructor ───────── */
+  protected constructor(
+    tag: string,
+    basePath: string,
+    { debug = false }: { debug?: boolean } = {}
+  ) {
+    this.tag = tag;
+    this.basePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
+    this.debug = debug || process.env.DEBUG_ROUTER === "true";
+    this.router = express.Router();
 
-    // Define a base path – all routes will be mounted under this path.
-    const basePath = this.options.basePath || "";
-
-    // Apply capabilities (middleware) from the provided specs.
-    if (this.options.capabilities && this.options.capabilities.length) {
-      this.options.capabilities.forEach((spec: CapabilitySpec) => {
-        this.applyCapability(spec);
-      });
-    }
-
-    // Load and register route classes, prefixing their paths with basePath.
-    this.loadRoutes(basePath);
-
-    // Attach a fallback (backstop) route at basePath + backstop.routeAt.
-    this.app.use(basePath + this.options.backstop.routeAt, (req, res) => {
-      res.status(404).send("Not Found");
-    });
+    this.attachMiddlewares();
   }
 
-  private applyCapability(spec: CapabilitySpec): void {
-    switch (spec.blueprint) {
-      case "body-parser":
-        if (spec.options && spec.options.properties) {
-          if (spec.options.properties.json) {
-            this.app.use(bodyParser.json());
-          }
-          if (spec.options.properties.urlencoded) {
-            this.app.use(
-              bodyParser.urlencoded(spec.options.properties.urlencoded)
-            );
-          }
-        }
-        console.log(`[${spec.name}] BodyParser applied`);
-        break;
-      case "helmet":
-        this.app.use(helmet(spec.options || {}));
-        console.log(`[${spec.name}] Helmet applied`);
-        break;
-      case "passport":
-        this.app.use(spec.options.route || "/*", passport.initialize());
-        console.log(`[${spec.name}] Passport applied`);
-        break;
-      // Add additional capabilities as needed...
-      default:
-        if (!spec.optional) {
-          console.warn(`Unknown capability blueprint: ${spec.blueprint}`);
-        }
-    }
-  }
+  /* ───────── optional middle‑/after‑ hooks ───────── */
 
-  private loadRoutes(basePath: string): void {
-    // Resolve the container directory where route classes live.
-    const containerDir = path.resolve(
-      process.cwd(),
-      this.options.routesToLoad.container
+  /** Override to inject auth, rate‑limit, etc. */
+  protected attachMiddlewares(): void {}
+
+  /** Override for metrics, tracing… */
+  protected beforeInvoke(_req: Request, _res: Response): void {}
+
+  /** Override for logging, cleanup… */
+  protected afterInvoke(_req: Request, _res: Response): void {}
+
+  /* ───────── debugging helpers ───────── */
+
+  protected debugRequest(req: Request): void {
+    console.debug(
+      "⇢ REQUEST",
+      util.inspect(
+        {
+          url: `${req.method} ${req.originalUrl}`,
+          headers: req.headers,
+          params: req.params,
+          query: req.query,
+          body: req.body,
+        },
+        false,
+        4,
+        true
+      )
     );
-    const files = glob.sync(containerDir + "/**/*.{js,ts}");
+  }
 
-    for (const file of files) {
-      const routesModule = require(file);
-      for (const exportKey in routesModule) {
-        const RouteClass = routesModule[exportKey];
-        if (
-          typeof RouteClass === "function" &&
-          Reflect.hasMetadata("route:path", RouteClass)
-        ) {
-          const discoverableTag = Reflect.getMetadata("route:tag", RouteClass);
-          if (discoverableTag === this.options.routeTag) {
-            const instance = new RouteClass();
-            const classPath: string = Reflect.getMetadata(
-              "route:path",
-              RouteClass
-            );
-            // Combine the basePath and the route class path.
-            const fullPath = basePath + classPath;
-            const proto = Object.getPrototypeOf(instance);
-            const methodNames = Object.getOwnPropertyNames(proto).filter(
-              (name) => name !== "constructor"
-            );
+  protected debugResponse(res: Response): void {
+    console.debug(
+      "⇠ RESPONSE",
+      util.inspect(
+        {
+          statusCode: res.statusCode,
+          statusMessage: res.statusMessage,
+          headers: res.getHeaders(),
+          // any data the handler stashed on res.locals
+          locals: res.locals,
+        },
+        false,
+        4,
+        true
+      )
+    );
+  }
 
-            for (const methodName of methodNames) {
-              const methodFunc = instance[methodName];
-              if (
-                typeof methodFunc === "function" &&
-                Reflect.hasMetadata("route:endpoint", methodFunc)
-              ) {
-                const httpMethod: string = Reflect.getMetadata(
-                  "route:endpoint",
-                  methodFunc
-                );
-                const errorMapping: { [key: string]: number } =
-                  Reflect.getMetadata("route:errorMapping", methodFunc) || {};
-                const argumentMapping: any[] =
-                  Reflect.getMetadata("route:argumentMapping", methodFunc) ||
-                  [];
+  /* ───────── internal: wrap one endpoint ───────── */
 
-                const resolveArgument = (
-                  mapping: any,
-                  req: any,
-                  res: any,
-                  next: any
-                ): any => {
-                  if (typeof mapping === "string") {
-                    switch (mapping) {
-                      case "$query":
-                        return req.query;
-                      case "$body":
-                        return req.body;
-                      case "$params":
-                        return req.params;
-                      case "$headers":
-                        return req.headers;
-                      case "$req":
-                        return req;
-                      case "$res":
-                        return res;
-                      case "$next":
-                        return next;
-                      case "$files":
-                        return req.files;
-                      default:
-                        return undefined;
-                    }
-                  } else if (typeof mapping === "object" && mapping !== null) {
-                    const key = Object.keys(mapping)[0];
-                    const prop = mapping[key];
-                    switch (key) {
-                      case "$body":
-                        return req.body ? req.body[prop] : undefined;
-                      case "$query":
-                        return req.query ? req.query[prop] : undefined;
-                      case "$params":
-                        return req.params ? req.params[prop] : undefined;
-                      case "$headers":
-                        return req.headers ? req.headers[prop] : undefined;
-                      default:
-                        return undefined;
-                    }
-                  }
-                  return undefined;
-                };
+  private createHandler(
+    instance: any,
+    handlerName: string | symbol
+  ): RequestHandler {
+    const argMap: string[] =
+      Reflect.getMetadata(ARG_MAP_KEY, instance, handlerName) ?? [];
+    const errMap =
+      Reflect.getMetadata(ERROR_MAP_KEY, instance, handlerName) ?? {};
 
-                const wrappedHandler = async (
-                  req: any,
-                  res: any,
-                  next: any
-                ) => {
-                  try {
-                    const mappedArgs =
-                      argumentMapping.length > 0
-                        ? argumentMapping.map((m) =>
-                            resolveArgument(m, req, res, next)
-                          )
-                        : [req, res, next];
-                    const result = await methodFunc.apply(instance, mappedArgs);
-                    res.json({
-                      path: `[${httpMethod.toUpperCase()}] ${fullPath}`,
-                      success: true,
-                      data: result,
-                    });
-                  } catch (error: any) {
-                    const status = errorMapping[error.code] || 500;
-                    res.status(status).json({
-                      path: `[${httpMethod.toUpperCase()}] ${fullPath}`,
-                      success: false,
-                      data: error.message || "Internal Server Error",
-                    });
-                  }
-                };
+    const endpoint = (instance as any)[handlerName].bind(instance);
+    const self = this;
 
-                // Register the route handler directly on the app.
-                this.app[httpMethod](fullPath, wrappedHandler);
-              }
-            }
-          }
+    return async function (req: Request, res: Response, next: NextFunction) {
+      try {
+        if (self.debug) self.debugRequest(req);
+        self.beforeInvoke(req, res);
+
+        const args = resolveArguments(argMap, req);
+        const result = await endpoint(...args);
+
+        if (!res.headersSent) {
+          const { status, data } =
+            typeof result === "object" && result && "status" in result
+              ? (result as any)
+              : { status: result === undefined ? 204 : 200, data: result };
+
+          sendEnvelope(req, res, status, data);
         }
+
+        self.afterInvoke(req, res);
+        if (self.debug) self.debugResponse(res);
+      } catch (err: any) {
+        const status = translateError(err, errMap);
+        sendEnvelope(req, res, status, {
+          message: err.message ?? "Internal Server Error",
+        });
+        if (self.debug) self.debugResponse(res);
       }
-    }
+    };
+  }
+
+  /* ───────── internal: mount all endpoints ───────── */
+  _mount(
+    path: string,
+    verb: keyof Router,
+    instance: any,
+    name: string | symbol
+  ): void {
+    const wrapped = this.createHandler(instance, name);
+    (this.router as any)[verb](path, wrapped);
   }
 }
