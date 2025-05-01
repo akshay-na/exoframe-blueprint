@@ -1,7 +1,7 @@
-import app from "../App";
+import App from "../BoilerplateApp";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ?? 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+App().listen(PORT, () =>
+  console.log(`🚀 API ready on : http://localhost${PORT}`)
+);
