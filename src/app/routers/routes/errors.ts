@@ -1,5 +1,5 @@
-import { LooseObject } from "@/lib/src/lib/common/LooseObject";
-import { RuntimeError } from "@/lib/src/lib/common/RuntimeError";
+import { LooseObject } from "@akshay-na/exoframe/lib/common/LooseObject";
+import { RuntimeError } from "@akshay-na/exoframe/lib/common/RuntimeError";
 
 export class InvalidRequest extends RuntimeError {
   constructor(info?: LooseObject);

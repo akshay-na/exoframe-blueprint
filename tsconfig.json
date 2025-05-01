@@ -17,7 +17,8 @@
     "allowUnreachableCode": false,
     "paths": {
       "*": ["*", "node_modules/@types/*"],
-      "@/*": ["src/*", "node_modules/@types/*"]
+      "@/*": ["src/*", "node_modules/@types/*"],
+      "@akshay-na/exoframe/*": ["src/lib/src/*"]
     },
     "types": ["node", "reflect-metadata"],
     "module": "commonjs",

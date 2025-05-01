@@ -1,4 +1,4 @@
-import { z } from "@/lib/src/lib/zod/ZodUtils";
+import { z } from "@akshay-na/exoframe/lib/zod/ZodUtils";
 
 const locationSchema = z.object({
   lat: z.number().min(-90).max(90),

@@ -6,8 +6,8 @@ import {
   ErrorMapping,
   Route,
   RouteDescription,
-} from "@/lib/src/lib/decorators/Route";
-import { ZodUtils } from "@/lib/src/lib/zod/ZodUtils";
+} from "@akshay-na/exoframe/lib/decorators/Route";
+import { ZodUtils } from "@akshay-na/exoframe/lib/zod/ZodUtils";
 import { UserData, userSchema } from "./schemas/HelloWorldBody";
 
 interface HelloResponse {

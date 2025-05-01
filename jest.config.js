@@ -20,8 +20,8 @@ module.exports = {
   ],
   verbose: true,
   moduleNameMapper: {
-    "^src/(.*)$": "<rootDir>/src/$1",
-    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@akshay-na/exoframe/(.*)$": "<rootDir>/src/lib/src/$1",
+    "^@/(.*)$": ["<rootDir>/src/$1", "<rootDir>/node_modules/@types/$1"],
   },
   moduleFileExtensions: ["js", "jsx", "json", "ts", "tsx"],
   transform: {
