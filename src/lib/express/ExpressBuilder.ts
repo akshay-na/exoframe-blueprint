@@ -8,6 +8,7 @@ import {
   META_ERRORS,
   META_ROUTE,
 } from "../decorators/Route";
+import { sendEnvelope } from "../http/ResponseFormatter";
 import { RouteRegistry } from "./RouteRegistry";
 import { applyGuards, resolveToken } from "./utils";
 
@@ -53,23 +54,24 @@ export class ExpressBuilder {
           req: Request,
           res: Response,
           next: NextFunction
-        ): Promise<Response | void> => {
+        ): Promise<void> => {
           try {
             /* ---------- Simple argument resolver ---------- */
             const resolvedArgs = argMapping.map((token) =>
               resolveToken(token, req)
             );
             const result = await instance[key](...resolvedArgs);
-            return res.json(result);
+            sendEnvelope(req, res, 200, result);
           } catch (err: any) {
             const matched = Object.entries(errorMap).find(
               ([code]) => code === err?.code
             );
             if (matched) {
               const [, status] = matched;
-              return res
-                .status(status as number)
-                .json({ error: err?.code, message: err?.message });
+              sendEnvelope(req, res, status, {
+                error: err?.code,
+                message: err?.message,
+              });
             }
             return next(err);
           }
