@@ -1,6 +1,12 @@
 import "reflect-metadata";
 
-import { Express, NextFunction, Request, Response, Router } from "express";
+import express, {
+  Express,
+  NextFunction,
+  Request,
+  Response,
+  Router,
+} from "express";
 import { Environment, ENVIRONMENT } from "../common/Environment";
 import {
   META_ARGS,
@@ -14,16 +20,19 @@ import { RouteRegistry } from "./RouteRegistry";
 import { applyGuards, resolveToken } from "./utils";
 
 export class ExpressBuilder {
-  constructor(
-    private readonly app: Express,
-    private readonly basePath = ""
-  ) {}
+  public readonly app: Express;
+
+  constructor(private readonly basePath = "") {
+    this.app = express();
+  }
 
   public get environment(): Environment {
     return ENVIRONMENT;
   }
 
-  initialize(): void {
+  initialize(): Express {
+    this.app.use(express.json());
+
     for (const routeClass of RouteRegistry.instance.all()) {
       const { path } = Reflect.getMetadata(META_ROUTE, routeClass) as {
         path: string;
@@ -89,5 +98,7 @@ export class ExpressBuilder {
 
       this.app.use(this.basePath, router);
     }
+
+    return this.app;
   }
 }

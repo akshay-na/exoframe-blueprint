@@ -42,27 +42,7 @@
       "path": "cz-conventional-changelog"
     }
   },
-  "dependencies": {
-    "bcrypt": "5.1.1",
-    "body-parser": "1.20.3",
-    "compression": "1.8.0",
-    "cookie-parser": "1.4.7",
-    "cors": "2.8.5",
-    "dotenv": "16.4.5",
-    "express": "4.21.1",
-    "express-brute": "1.0.1",
-    "express-fileupload": "1.5.1",
-    "express-flash": "0.0.2",
-    "express-rate-limit": "7.5.0",
-    "express-winston": "4.2.0",
-    "helmet": "8.0.0",
-    "passport": "0.7.0",
-    "reflect-metadata": "0.2.2",
-    "uuid": "11.0.5",
-    "winston": "3.17.0",
-    "winston-daily-rotate-file": "5.0.0",
-    "zod": "3.24.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",
