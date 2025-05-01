@@ -61,8 +61,6 @@ $RECYCLE.BIN/
 /coverage-final.json
 /coverage-summary.json
 /__tests__/
-/test/
-/tests/
 /karma-coverage/
 /test-output
 /.vscode-test
@@ -99,11 +97,6 @@ $RECYCLE.BIN/
 /tsconfig.tsbuildinfo
 /tsconfig.build.tsbuildinfo
 /*.tsbuildinfo
-
-# Lock files
-/package-lock.json
-/yarn.lock
-/pnpm-lock.yaml
 
 # IDE and editor-specific files
 

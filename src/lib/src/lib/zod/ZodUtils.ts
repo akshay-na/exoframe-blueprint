@@ -16,8 +16,7 @@ export class ZodUtils {
       if (error instanceof ZodError) {
         const errorMessage = error.errors
           .map((e: ZodIssue) => {
-            const path =
-              e.path.length > 0 ? `Field: ${e.path.join(" -> ")}` : "";
+            const path = e.path.length > 0 ? `${e.path.join(" -> ")}` : "";
             return `${path}: ${e.message}`;
           })
           .join(", ");
@@ -36,8 +35,7 @@ export class ZodUtils {
       if (error instanceof ZodError) {
         const errorMessage = error.errors
           .map((e: ZodIssue) => {
-            const path =
-              e.path.length > 0 ? `Field: ${e.path.join(" -> ")}` : "";
+            const path = e.path.length > 0 ? `${e.path.join(" -> ")}` : "";
             return `${path}: ${e.message}`;
           })
           .join(", ");
