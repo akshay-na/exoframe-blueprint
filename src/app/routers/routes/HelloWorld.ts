@@ -1,3 +1,4 @@
+import { LooseObject } from "@akshay-na/exoframe/lib/common/LooseObject";
 import {
   ArgumentMapping,
   Configuration,
@@ -20,11 +21,11 @@ interface HelloResponse {
 export class HelloWorld {
   @Endpoint("GET")
   @Configuration({ access: "PUBLIC", auth: "NONE" })
-  @ArgumentMapping([])
+  @ArgumentMapping(["$query"])
   @ErrorMapping({ NOT_AUTHORIZED: 404 })
-  public async sayHello(): Promise<HelloResponse> {
+  public async sayHello(query: LooseObject): Promise<HelloResponse> {
     try {
-      return { message: "Hello World!" };
+      return { message: `Hello ${query.name || "World"}!` };
     } catch (error: any) {
       switch (error.id) {
         default:
