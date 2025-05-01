@@ -1,3 +1,4 @@
+import { LooseObject } from "../common/LooseObject";
 import { RouteRegistry } from "../express/RouteRegistry";
 
 export const META_ROUTE = Symbol("route:meta");
@@ -46,7 +47,9 @@ export function Configuration(options: ConfigurationOptions): MethodDecorator {
     Reflect.defineMetadata(META_CONFIG, options, target, propertyKey);
 }
 
-export function ArgumentMapping(args: string[]): MethodDecorator {
+export function ArgumentMapping(
+  args: (string | LooseObject)[]
+): MethodDecorator {
   return (target, propertyKey) =>
     Reflect.defineMetadata(META_ARGS, args, target, propertyKey);
 }

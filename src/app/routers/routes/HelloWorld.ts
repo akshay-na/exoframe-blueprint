@@ -14,7 +14,7 @@ interface HelloResponse {
   message: string;
 }
 
-@Route("/api/v1/hello")
+@Route("/api/v1/hello/:name?")
 @RouteDescription("Simple hello-world endpoint")
 @Discoverable("demo:hello")
 export class HelloWorld {
@@ -41,6 +41,25 @@ export class HelloWorld {
     try {
       ZodUtils.parse(userSchema, data);
       return { message: "POSTED" };
+    } catch (error: any) {
+      switch (error.id) {
+        default:
+          throw error;
+      }
+    }
+  }
+
+  @Endpoint("PUT")
+  @Configuration({ access: "PUBLIC", auth: "NONE" })
+  @ArgumentMapping([{ $param: "name" }, { $body: { $schema: "body" } }])
+  @ErrorMapping({ VALIDATION_FAILED: 400 })
+  public async repeatHello(
+    category: string,
+    body: UserData
+  ): Promise<HelloResponse> {
+    try {
+      ZodUtils.parse(userSchema, body);
+      return { message: `Hello ${category}!` };
     } catch (error: any) {
       switch (error.id) {
         default:

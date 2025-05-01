@@ -75,6 +75,7 @@ export class ExpressBuilder {
             const resolvedArgs = argMapping.map((token) =>
               resolveToken(token, req)
             );
+
             const result = await instance[key](...resolvedArgs);
             sendEnvelope(req, res, 200, result);
           } catch (err: any) {
