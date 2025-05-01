@@ -1,4 +1,4 @@
-import { v4 as UUIDv4 } from "uuid";
+import { UUID } from "../../common/UUID";
 import { Collection, CollectionOptions, Identifiable } from "./types";
 
 export class InternalCollection<T extends Identifiable>
@@ -9,7 +9,7 @@ export class InternalCollection<T extends Identifiable>
 
   constructor(opts: CollectionOptions<T>) {
     this.options = {
-      idFactory: opts.idFactory ?? (() => UUIDv4()),
+      idFactory: opts.idFactory ?? (() => UUID.randomUUID()),
       readonly: opts.readonly ?? false,
     } as Required<CollectionOptions<T>>;
   }

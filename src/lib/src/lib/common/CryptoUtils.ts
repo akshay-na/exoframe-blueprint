@@ -4,7 +4,6 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import fs from "fs";
-import { v4 as UUIDv4 } from "uuid";
 
 import { ENVIRONMENT } from "../common/Environment";
 import { Todo } from "./errors";
@@ -16,6 +15,7 @@ import {
   KeyFile,
   Secret,
 } from "./types";
+import { UUID } from "./UUID";
 
 export class CryptoUtils {
   public static DEFAULT_ROUNDS = 5;
@@ -107,7 +107,7 @@ export class CryptoUtils {
   public static async generateToken(
     factory?: (value: string) => string
   ): Promise<string> {
-    let token = await CryptoUtils.hash(UUIDv4());
+    let token = await CryptoUtils.hash(UUID.randomUUID());
     if (factory !== undefined) token = factory(token);
     return Buffer.from(unescape(encodeURIComponent(token))).toString("base64");
   }

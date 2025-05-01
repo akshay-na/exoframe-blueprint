@@ -1,7 +1,7 @@
 {
-  "name": "express-js-boilerplate",
+  "name": "express-lib",
   "version": "1.0.0",
-  "description": "Boilerplate to start a node project",
+  "description": "Private lib written over Express",
   "email": "akshayna04@gmail.com",
   "author": "akshay-na",
   "license": "MIT",
@@ -13,23 +13,12 @@
   "bugs": {
     "url": "https://github.com/akshay-na/express-js-template/issues"
   },
-
   "scripts": {
     "dist": "gulp build",
-    "commit": "cz",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "prepare": "husky",
-    "pre-commit": "npx lint-staged",
-    "pre-push": "npm run test:cov",
-    "release": "HUSKY_SKIP_HOOKS=1 CI=true npx -y semantic-release --no-verify",
-    "start": "env NODE_ENV=development ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/app/servers/BoilerplateServer.ts",
-    "start:prod": "node dist/app/servers/BoilerplateServer.js",
-    "test": "jest --detectOpenHandles --coverage",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
     "**/*.ts": ["eslint --fix"],
@@ -43,11 +32,13 @@
     }
   },
   "dependencies": {
+    "axios": "1.9.0",
     "bcrypt": "5.1.1",
     "body-parser": "1.20.3",
     "compression": "1.8.0",
     "cookie-parser": "1.4.7",
     "cors": "2.8.5",
+    "dateformat": "5.0.3",
     "dotenv": "16.4.5",
     "express": "4.21.1",
     "express-brute": "1.0.1",

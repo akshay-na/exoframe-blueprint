@@ -1,6 +1,7 @@
 import "reflect-metadata";
 
 import { Express, NextFunction, Request, Response, Router } from "express";
+import { Environment, ENVIRONMENT } from "../common/Environment";
 import {
   META_ARGS,
   META_CONFIG,
@@ -18,16 +19,18 @@ export class ExpressBuilder {
     private readonly basePath = ""
   ) {}
 
-  build(): void {
+  public get environment(): Environment {
+    return ENVIRONMENT;
+  }
+
+  initialize(): void {
     for (const routeClass of RouteRegistry.instance.all()) {
-      /* ---------- class‑level metadata ---------- */
       const { path } = Reflect.getMetadata(META_ROUTE, routeClass) as {
         path: string;
       };
       const router = Router();
       const instance = new (routeClass as any)();
 
-      /* ---------- walk own methods ---------- */
       for (const key of Object.getOwnPropertyNames(routeClass.prototype)) {
         if (key === "constructor") continue;
 

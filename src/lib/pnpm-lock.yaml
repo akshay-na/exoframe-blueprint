@@ -4,392 +4,201 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-importers:
-  .:
-    dependencies:
-      bcrypt:
-        specifier: 5.1.1
-        version: 5.1.1
-      body-parser:
-        specifier: 1.20.3
-        version: 1.20.3
-      compression:
-        specifier: 1.8.0
-        version: 1.8.0
-      cookie-parser:
-        specifier: 1.4.7
-        version: 1.4.7
-      cors:
-        specifier: 2.8.5
-        version: 2.8.5
-      dotenv:
-        specifier: 16.4.5
-        version: 16.4.5
-      express:
-        specifier: 4.21.1
-        version: 4.21.1
-      express-brute:
-        specifier: 1.0.1
-        version: 1.0.1(express@4.21.1)
-      express-fileupload:
-        specifier: 1.5.1
-        version: 1.5.1
-      express-flash:
-        specifier: 0.0.2
-        version: 0.0.2
-      express-rate-limit:
-        specifier: 7.5.0
-        version: 7.5.0(express@4.21.1)
-      express-winston:
-        specifier: 4.2.0
-        version: 4.2.0(winston@3.17.0)
-      helmet:
-        specifier: 8.0.0
-        version: 8.0.0
-      passport:
-        specifier: 0.7.0
-        version: 0.7.0
-      reflect-metadata:
-        specifier: 0.2.2
-        version: 0.2.2
-      uuid:
-        specifier: 11.0.5
-        version: 11.0.5
-      winston:
-        specifier: 3.17.0
-        version: 3.17.0
-      winston-daily-rotate-file:
-        specifier: 5.0.0
-        version: 5.0.0(winston@3.17.0)
-      zod:
-        specifier: 3.24.3
-        version: 3.24.3
-    devDependencies:
-      "@commitlint/cli":
-        specifier: ^19.6.0
-        version: 19.7.1(@types/node@22.13.4)(typescript@5.7.3)
-      "@commitlint/config-conventional":
-        specifier: ^19.6.0
-        version: 19.7.1
-      "@semantic-release/changelog":
-        specifier: ^6.0.3
-        version: 6.0.3(semantic-release@24.2.3)
-      "@semantic-release/exec":
-        specifier: ^6.0.3
-        version: 6.0.3(semantic-release@24.2.3)
-      "@semantic-release/git":
-        specifier: ^10.0.1
-        version: 10.0.1(semantic-release@24.2.3)
-      "@testing-library/jest-dom":
-        specifier: 6.6.3
-        version: 6.6.3
-      "@types/express":
-        specifier: ^5.0.0
-        version: 5.0.0
-      "@types/jest":
-        specifier: ^29.5.14
-        version: 29.5.14
-      "@types/node":
-        specifier: ^22.13.4
-        version: 22.13.4
-      "@types/supertest":
-        specifier: ^6.0.2
-        version: 6.0.2
-      "@typescript-eslint/eslint-plugin":
-        specifier: ^8.15.0
-        version: 8.24.1(@typescript-eslint/parser@8.24.1)(eslint@9.20.1)(typescript@5.7.3)
-      "@typescript-eslint/parser":
-        specifier: ^8.15.0
-        version: 8.24.1(eslint@9.20.1)(typescript@5.7.3)
-      commitizen:
-        specifier: ^4.3.1
-        version: 4.3.1(@types/node@22.13.4)(typescript@5.7.3)
-      conventional-commit-types:
-        specifier: ^3.0.0
-        version: 3.0.0
-      cz-conventional-changelog:
-        specifier: ^3.3.0
-        version: 3.3.0(@types/node@22.13.4)(typescript@5.7.3)
-      del:
-        specifier: 8.0.0
-        version: 8.0.0
-      depcheck:
-        specifier: 1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^9.15.0
-        version: 9.20.1
-      eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@9.20.1)
-      eslint-plugin-import:
-        specifier: 2.31.0
-        version: 2.31.0(@typescript-eslint/parser@8.24.1)(eslint@9.20.1)
-      eslint-plugin-jsdoc:
-        specifier: 50.5.0
-        version: 50.5.0(eslint@9.20.1)
-      eslint-plugin-prettier:
-        specifier: ^5.2.1
-        version: 5.2.3(eslint-config-prettier@9.1.0)(eslint@9.20.1)(prettier@3.5.1)
-      gulp:
-        specifier: 5.0.0
-        version: 5.0.0
-      gulp-cached:
-        specifier: 1.1.1
-        version: 1.1.1
-      gulp-notify:
-        specifier: 5.0.0
-        version: 5.0.0
-      gulp-plumber:
-        specifier: 1.2.1
-        version: 1.2.1
-      gulp-remember:
-        specifier: 1.0.1
-        version: 1.0.1
-      gulp-typescript:
-        specifier: 6.0.0-alpha.1
-        version: 6.0.0-alpha.1(typescript@5.7.3)
-      gulp-uglify:
-        specifier: 3.0.2
-        version: 3.0.2
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2)
-      jest-junit:
-        specifier: 16.0.0
-        version: 16.0.0
-      jest-pnp-resolver:
-        specifier: 1.2.3
-        version: 1.2.3(jest-resolve@29.7.0)
-      lint-staged:
-        specifier: ^15.2.10
-        version: 15.4.3
-      prettier:
-        specifier: ^3.3.3
-        version: 3.5.1
-      semantic-release:
-        specifier: ^24.2.0
-        version: 24.2.3(typescript@5.7.3)
-      supertest:
-        specifier: ^7.0.0
-        version: 7.0.0
-      ts-jest:
-        specifier: ^29.2.5
-        version: 29.2.5(@babel/core@7.23.9)(jest@29.7.0)(typescript@5.7.3)
-      ts-loader:
-        specifier: ^9.5.1
-        version: 9.5.1(typescript@5.7.3)(webpack@5.90.1)
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@types/node@22.13.4)(typescript@5.7.3)
-      ts-node-dev:
-        specifier: 2.0.0
-        version: 2.0.0(@types/node@22.13.4)(typescript@5.7.3)
-      tsconfig-paths:
-        specifier: ^4.2.0
-        version: 4.2.0
-      typescript:
-        specifier: ^5.7.3
-        version: 5.7.3
+dependencies:
+  axios:
+    specifier: 1.9.0
+    version: 1.9.0
+  bcrypt:
+    specifier: 5.1.1
+    version: 5.1.1
+  body-parser:
+    specifier: 1.20.3
+    version: 1.20.3
+  compression:
+    specifier: 1.8.0
+    version: 1.8.0
+  cookie-parser:
+    specifier: 1.4.7
+    version: 1.4.7
+  cors:
+    specifier: 2.8.5
+    version: 2.8.5
+  dateformat:
+    specifier: 5.0.3
+    version: 5.0.3
+  dotenv:
+    specifier: 16.4.5
+    version: 16.4.5
+  express:
+    specifier: 4.21.1
+    version: 4.21.1
+  express-brute:
+    specifier: 1.0.1
+    version: 1.0.1(express@4.21.1)
+  express-fileupload:
+    specifier: 1.5.1
+    version: 1.5.1
+  express-flash:
+    specifier: 0.0.2
+    version: 0.0.2
+  express-rate-limit:
+    specifier: 7.5.0
+    version: 7.5.0(express@4.21.1)
+  express-winston:
+    specifier: 4.2.0
+    version: 4.2.0(winston@3.17.0)
+  helmet:
+    specifier: 8.0.0
+    version: 8.0.0
+  passport:
+    specifier: 0.7.0
+    version: 0.7.0
+  reflect-metadata:
+    specifier: 0.2.2
+    version: 0.2.2
+  uuid:
+    specifier: 11.0.5
+    version: 11.0.5
+  winston:
+    specifier: 3.17.0
+    version: 3.17.0
+  winston-daily-rotate-file:
+    specifier: 5.0.0
+    version: 5.0.0(winston@3.17.0)
+  zod:
+    specifier: 3.24.3
+    version: 3.24.3
 
-  src/lib:
-    dependencies:
-      axios:
-        specifier: 1.9.0
-        version: 1.9.0
-      bcrypt:
-        specifier: 5.1.1
-        version: 5.1.1
-      body-parser:
-        specifier: 1.20.3
-        version: 1.20.3
-      compression:
-        specifier: 1.8.0
-        version: 1.8.0
-      cookie-parser:
-        specifier: 1.4.7
-        version: 1.4.7
-      cors:
-        specifier: 2.8.5
-        version: 2.8.5
-      dateformat:
-        specifier: 5.0.3
-        version: 5.0.3
-      dotenv:
-        specifier: 16.4.5
-        version: 16.4.5
-      express:
-        specifier: 4.21.1
-        version: 4.21.1
-      express-brute:
-        specifier: 1.0.1
-        version: 1.0.1(express@4.21.1)
-      express-fileupload:
-        specifier: 1.5.1
-        version: 1.5.1
-      express-flash:
-        specifier: 0.0.2
-        version: 0.0.2
-      express-rate-limit:
-        specifier: 7.5.0
-        version: 7.5.0(express@4.21.1)
-      express-winston:
-        specifier: 4.2.0
-        version: 4.2.0(winston@3.17.0)
-      helmet:
-        specifier: 8.0.0
-        version: 8.0.0
-      passport:
-        specifier: 0.7.0
-        version: 0.7.0
-      reflect-metadata:
-        specifier: 0.2.2
-        version: 0.2.2
-      uuid:
-        specifier: 11.0.5
-        version: 11.0.5
-      winston:
-        specifier: 3.17.0
-        version: 3.17.0
-      winston-daily-rotate-file:
-        specifier: 5.0.0
-        version: 5.0.0(winston@3.17.0)
-      zod:
-        specifier: 3.24.3
-        version: 3.24.3
-    devDependencies:
-      "@commitlint/cli":
-        specifier: ^19.6.0
-        version: 19.7.1(@types/node@22.13.4)(typescript@5.7.3)
-      "@commitlint/config-conventional":
-        specifier: ^19.6.0
-        version: 19.7.1
-      "@semantic-release/changelog":
-        specifier: ^6.0.3
-        version: 6.0.3(semantic-release@24.2.3)
-      "@semantic-release/exec":
-        specifier: ^6.0.3
-        version: 6.0.3(semantic-release@24.2.3)
-      "@semantic-release/git":
-        specifier: ^10.0.1
-        version: 10.0.1(semantic-release@24.2.3)
-      "@testing-library/jest-dom":
-        specifier: 6.6.3
-        version: 6.6.3
-      "@types/express":
-        specifier: ^5.0.0
-        version: 5.0.0
-      "@types/jest":
-        specifier: ^29.5.14
-        version: 29.5.14
-      "@types/node":
-        specifier: ^22.13.4
-        version: 22.13.4
-      "@types/supertest":
-        specifier: ^6.0.2
-        version: 6.0.2
-      "@typescript-eslint/eslint-plugin":
-        specifier: ^8.15.0
-        version: 8.24.1(@typescript-eslint/parser@8.24.1)(eslint@9.20.1)(typescript@5.7.3)
-      "@typescript-eslint/parser":
-        specifier: ^8.15.0
-        version: 8.24.1(eslint@9.20.1)(typescript@5.7.3)
-      commitizen:
-        specifier: ^4.3.1
-        version: 4.3.1(@types/node@22.13.4)(typescript@5.7.3)
-      conventional-commit-types:
-        specifier: ^3.0.0
-        version: 3.0.0
-      cz-conventional-changelog:
-        specifier: ^3.3.0
-        version: 3.3.0(@types/node@22.13.4)(typescript@5.7.3)
-      del:
-        specifier: 8.0.0
-        version: 8.0.0
-      depcheck:
-        specifier: 1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^9.15.0
-        version: 9.20.1
-      eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@9.20.1)
-      eslint-plugin-import:
-        specifier: 2.31.0
-        version: 2.31.0(@typescript-eslint/parser@8.24.1)(eslint@9.20.1)
-      eslint-plugin-jsdoc:
-        specifier: 50.5.0
-        version: 50.5.0(eslint@9.20.1)
-      eslint-plugin-prettier:
-        specifier: ^5.2.1
-        version: 5.2.3(eslint-config-prettier@9.1.0)(eslint@9.20.1)(prettier@3.5.1)
-      gulp:
-        specifier: 5.0.0
-        version: 5.0.0
-      gulp-cached:
-        specifier: 1.1.1
-        version: 1.1.1
-      gulp-notify:
-        specifier: 5.0.0
-        version: 5.0.0
-      gulp-plumber:
-        specifier: 1.2.1
-        version: 1.2.1
-      gulp-remember:
-        specifier: 1.0.1
-        version: 1.0.1
-      gulp-typescript:
-        specifier: 6.0.0-alpha.1
-        version: 6.0.0-alpha.1(typescript@5.7.3)
-      gulp-uglify:
-        specifier: 3.0.2
-        version: 3.0.2
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2)
-      jest-junit:
-        specifier: 16.0.0
-        version: 16.0.0
-      jest-pnp-resolver:
-        specifier: 1.2.3
-        version: 1.2.3(jest-resolve@29.7.0)
-      lint-staged:
-        specifier: ^15.2.10
-        version: 15.4.3
-      prettier:
-        specifier: ^3.3.3
-        version: 3.5.1
-      semantic-release:
-        specifier: ^24.2.0
-        version: 24.2.3(typescript@5.7.3)
-      supertest:
-        specifier: ^7.0.0
-        version: 7.0.0
-      ts-jest:
-        specifier: ^29.2.5
-        version: 29.2.5(@babel/core@7.23.9)(jest@29.7.0)(typescript@5.7.3)
-      ts-loader:
-        specifier: ^9.5.1
-        version: 9.5.1(typescript@5.7.3)(webpack@5.90.1)
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@types/node@22.13.4)(typescript@5.7.3)
-      ts-node-dev:
-        specifier: 2.0.0
-        version: 2.0.0(@types/node@22.13.4)(typescript@5.7.3)
-      tsconfig-paths:
-        specifier: ^4.2.0
-        version: 4.2.0
-      typescript:
-        specifier: ^5.7.3
-        version: 5.7.3
+devDependencies:
+  "@commitlint/cli":
+    specifier: ^19.6.0
+    version: 19.7.1(@types/node@22.13.4)(typescript@5.7.3)
+  "@commitlint/config-conventional":
+    specifier: ^19.6.0
+    version: 19.7.1
+  "@semantic-release/changelog":
+    specifier: ^6.0.3
+    version: 6.0.3(semantic-release@24.2.3)
+  "@semantic-release/exec":
+    specifier: ^6.0.3
+    version: 6.0.3(semantic-release@24.2.3)
+  "@semantic-release/git":
+    specifier: ^10.0.1
+    version: 10.0.1(semantic-release@24.2.3)
+  "@testing-library/jest-dom":
+    specifier: 6.6.3
+    version: 6.6.3
+  "@types/express":
+    specifier: ^5.0.0
+    version: 5.0.0
+  "@types/jest":
+    specifier: ^29.5.14
+    version: 29.5.14
+  "@types/node":
+    specifier: ^22.13.4
+    version: 22.13.4
+  "@types/supertest":
+    specifier: ^6.0.2
+    version: 6.0.2
+  "@typescript-eslint/eslint-plugin":
+    specifier: ^8.15.0
+    version: 8.24.1(@typescript-eslint/parser@8.24.1)(eslint@9.20.1)(typescript@5.7.3)
+  "@typescript-eslint/parser":
+    specifier: ^8.15.0
+    version: 8.24.1(eslint@9.20.1)(typescript@5.7.3)
+  commitizen:
+    specifier: ^4.3.1
+    version: 4.3.1(@types/node@22.13.4)(typescript@5.7.3)
+  conventional-commit-types:
+    specifier: ^3.0.0
+    version: 3.0.0
+  cz-conventional-changelog:
+    specifier: ^3.3.0
+    version: 3.3.0(@types/node@22.13.4)(typescript@5.7.3)
+  del:
+    specifier: 8.0.0
+    version: 8.0.0
+  depcheck:
+    specifier: 1.4.7
+    version: 1.4.7
+  eslint:
+    specifier: ^9.15.0
+    version: 9.20.1
+  eslint-config-prettier:
+    specifier: ^9.1.0
+    version: 9.1.0(eslint@9.20.1)
+  eslint-plugin-import:
+    specifier: 2.31.0
+    version: 2.31.0(@typescript-eslint/parser@8.24.1)(eslint@9.20.1)
+  eslint-plugin-jsdoc:
+    specifier: 50.5.0
+    version: 50.5.0(eslint@9.20.1)
+  eslint-plugin-prettier:
+    specifier: ^5.2.1
+    version: 5.2.3(eslint-config-prettier@9.1.0)(eslint@9.20.1)(prettier@3.5.1)
+  gulp:
+    specifier: 5.0.0
+    version: 5.0.0
+  gulp-cached:
+    specifier: 1.1.1
+    version: 1.1.1
+  gulp-notify:
+    specifier: 5.0.0
+    version: 5.0.0
+  gulp-plumber:
+    specifier: 1.2.1
+    version: 1.2.1
+  gulp-remember:
+    specifier: 1.0.1
+    version: 1.0.1
+  gulp-typescript:
+    specifier: 6.0.0-alpha.1
+    version: 6.0.0-alpha.1(typescript@5.7.3)
+  gulp-uglify:
+    specifier: 3.0.2
+    version: 3.0.2
+  husky:
+    specifier: ^9.1.7
+    version: 9.1.7
+  jest:
+    specifier: ^29.7.0
+    version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2)
+  jest-junit:
+    specifier: 16.0.0
+    version: 16.0.0
+  jest-pnp-resolver:
+    specifier: 1.2.3
+    version: 1.2.3(jest-resolve@29.7.0)
+  lint-staged:
+    specifier: ^15.2.10
+    version: 15.4.3
+  prettier:
+    specifier: ^3.3.3
+    version: 3.5.1
+  semantic-release:
+    specifier: ^24.2.0
+    version: 24.2.3(typescript@5.7.3)
+  supertest:
+    specifier: ^7.0.0
+    version: 7.0.0
+  ts-jest:
+    specifier: ^29.2.5
+    version: 29.2.5(@babel/core@7.23.9)(jest@29.7.0)(typescript@5.7.3)
+  ts-loader:
+    specifier: ^9.5.1
+    version: 9.5.1(typescript@5.7.3)(webpack@5.90.1)
+  ts-node:
+    specifier: ^10.9.2
+    version: 10.9.2(@types/node@22.13.4)(typescript@5.7.3)
+  ts-node-dev:
+    specifier: 2.0.0
+    version: 2.0.0(@types/node@22.13.4)(typescript@5.7.3)
+  tsconfig-paths:
+    specifier: ^4.2.0
+    version: 4.2.0
+  typescript:
+    specifier: ^5.7.3
+    version: 5.7.3
 
 packages:
   /@aashutoshrathi/word-wrap@1.2.6:

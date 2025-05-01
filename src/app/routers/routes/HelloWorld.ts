@@ -6,7 +6,7 @@ import {
   ErrorMapping,
   Route,
   RouteDescription,
-} from "../../../lib/decorators/Route";
+} from "../../../lib/src/lib/decorators/Route";
 
 interface HelloResponse {
   message: string;
@@ -23,7 +23,23 @@ export class HelloWorld {
   public async sayHello(): Promise<HelloResponse> {
     try {
       return { message: "Hello World!" };
-    } catch (error) {
+    } catch (error: any) {
+      switch (error.id) {
+        default:
+          throw error;
+      }
+    }
+  }
+
+  @Endpoint("POST")
+  @Configuration({ access: "PUBLIC", auth: "NONE" })
+  @ArgumentMapping(["$body"])
+  @ErrorMapping({ NOT_AUTHORIZED: 404 })
+  public async postHello(): Promise<HelloResponse> {
+    try {
+      console.log("🚀 ~ HelloWorld ~ postHello ~ Hello World!:");
+      return { message: "POSTED" };
+    } catch (error: any) {
       switch (error.id) {
         default:
           throw error;

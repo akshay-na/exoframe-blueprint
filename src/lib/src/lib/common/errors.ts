@@ -7,6 +7,12 @@ export class InvalidValue extends RuntimeError {
   }
 }
 
+export class InvalidUuid extends RuntimeError {
+  constructor(info?: LooseObject) {
+    super("INVALID_UUID", info);
+  }
+}
+
 export class Todo extends RuntimeError {
   constructor(info?: LooseObject) {
     super("TODO", info);

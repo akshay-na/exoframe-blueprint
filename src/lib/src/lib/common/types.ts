@@ -7,6 +7,8 @@ export type HashedValue = string;
 export type EncryptedValue = string;
 export type DecryptedValue = { type: string; value: string | Buffer };
 
+export type UuidType = string;
+
 export type KeyFile = PathLike | { keyfile: PathLike; passphrase: string };
 export type Secret =
   | string

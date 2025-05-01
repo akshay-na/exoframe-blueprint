@@ -1,0 +1,177 @@
+# Node.js dependencies and build outputs
+/node_modules
+/.cache
+/dist
+/build
+/lib
+/.parcel-cache
+/.next
+.nuxt
+/out
+/serverless
+/.serverless
+
+# Logs and debug files
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+lerna-debug.log*
+stacktrace.log
+
+# OS-specific files (macOS and other systems)
+/.DS_Store
+._*
+/.Trashes
+/.Spotlight-V100
+/.AppleDouble
+/.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temporary files and caches
+/tmp
+/temp
+/.temp
+/sandpit
+/.eslintcache
+/.prettiercache
+/.nodemonignore
+/.npm
+/.pnpm-debug.log
+/.lock-wscript
+/.wafpickle-*
+*.pid
+*.seed
+*.pid.lock
+
+# Test and coverage reports
+/test-results
+/junit-results.xml
+/junit-xml-report/
+/mochawesome-report/
+/cucumber-report/
+/tap-output.log
+/.coverage
+/coverage/
+/.nyc_output
+/coverage-final.json
+/coverage-summary.json
+/__tests__/
+/test/
+/tests/
+/karma-coverage/
+/test-output
+/.vscode-test
+
+# Environment files (protect secrets)
+**/.env
+.env.*.local
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+!.env.example
+
+# Build artifact files
+/.sass-cache/
+/connect.lock
+/.pnp
+/pnp.js
+/webpack-stats.json
+/yarn-error.log
+/.yarn-integrity
+/.next
+.nuxt
+.husky/_
+
+# Express.js related files
+/express-session-store
+/logs
+/temp
+/sessions
+
+# TypeScript specific files
+/tsconfig.tsbuildinfo
+/tsconfig.build.tsbuildinfo
+/*.tsbuildinfo
+
+# IDE and editor-specific files
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+
+# Sublime Text
+/*.sublime-workspace
+/*.sublime-project
+
+# JetBrains IDEs (IntelliJ, PyCharm, WebStorm, etc.)
+/.idea/
+/.idea/*
+/*.iml
+
+# Eclipse
+/.project
+/.classpath
+/.settings/
+/.settings/
+
+# Visual Studio
+.vscode/
+/.vs/
+*.suo
+*.ntvs
+*.njsproj
+*.sln
+*.ps1
+
+# Atom
+/.atom/
+*.swp
+*.swo
+/.atom-build/
+.apm
+
+# Emacs
+*~
+*.elc
+.projectile
+/temp
+/temp*
+
+# Vim
+*.swp
+*.swo
+*.un~
+Session.vim
+.viminfo
+.vimrc
+*.nvimlog
+
+# Other OS and system-specific files
+.DS_Store
+._*
+.Trashes
+.Spotlight-V100
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Other miscellaneous files
+/.editorconfig
+/.dockerignore
+/.envrc
+/.prettierignore
+/.eslintignore
+/.browserslistrc
