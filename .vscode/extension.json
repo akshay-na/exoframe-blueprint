@@ -4,6 +4,9 @@
     "esbenp.prettier-vscode",
     "shardulm94.trailing-spaces",
     "pkief.material-icon-theme",
-    "usernamehw.errorlens"
+    "usernamehw.errorlens",
+    "chakrounanas.turbo-console-log",
+    "steoates.autoimport",
+    "streetsidesoftware.code-spell-checker"
   ]
 }
