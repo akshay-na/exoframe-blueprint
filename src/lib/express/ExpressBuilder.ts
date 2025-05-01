@@ -36,7 +36,7 @@ export class ExpressBuilder {
           routeClass.prototype,
           key
         );
-        if (!endpoint) continue; // skip non‑decorated methods
+        if (!endpoint) continue;
 
         const config =
           (Reflect.getMetadata(
@@ -49,35 +49,33 @@ export class ExpressBuilder {
         const errorMap: ErrorMappingOptions =
           Reflect.getMetadata(META_ERRORS, routeClass.prototype, key) ?? {};
 
-        /* ------ We build a closure that binds config & error mapping ------ */
+        function errorKey(err: any): string | undefined {
+          if (!err || typeof err !== "object") return undefined;
+          return err.code ?? err.id ?? err.name;
+        }
+
         const handler = async (
           req: Request,
           res: Response,
           next: NextFunction
         ): Promise<void> => {
           try {
-            /* ---------- Simple argument resolver ---------- */
             const resolvedArgs = argMapping.map((token) =>
               resolveToken(token, req)
             );
             const result = await instance[key](...resolvedArgs);
             sendEnvelope(req, res, 200, result);
           } catch (err: any) {
-            const matched = Object.entries(errorMap).find(
-              ([code]) => code === err?.code
-            );
-            if (matched) {
-              const [, status] = matched;
-              sendEnvelope(req, res, status, {
-                error: err?.code,
-                message: err?.message,
-              });
-            }
-            return next(err);
+            const key = errorKey(err);
+            const status = key && errorMap[key] ? errorMap[key] : 500;
+
+            sendEnvelope(req, res, status, {
+              error: key,
+              message: err?.message,
+            });
           }
         };
 
-        /* ---------- Apply access control if needed ---------- */
         const verb = (endpoint.method as string).toLowerCase();
         (router as any)[verb](
           endpoint.hints?.includes("ACTION") ? path : `${path}`,
