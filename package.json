@@ -31,9 +31,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "lint-staged": {
-    "**/*.ts": [
-      "eslint --fix"
-    ],
+    "**/*.ts": ["eslint --fix"],
     "*.{js,jsx,ts,tsx,json,css,scss,md,yaml,yml}": [
       "npx prettier --list-different"
     ]
