@@ -22,7 +22,7 @@
     "pre-commit": "npx lint-staged",
     "pre-push": "npm run test:cov",
     "release": "HUSKY_SKIP_HOOKS=1 CI=true npx -y semantic-release --no-verify",
-    "start": "env NODE_ENV=development nodemon -r tsconfig-paths/register -r ts-node/register src/app/servers/BoilerplateServer.ts",
+    "start": "env NODE_ENV=development ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/app/servers/BoilerplateServer.ts",
     "start:prod": "node dist/app/servers/BoilerplateServer.js",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -47,6 +47,8 @@
     "express": "4.21.1",
     "express-fileupload": "1.5.1",
     "passport": "0.7.0",
+    "reflect-metadata": "0.2.2",
+    "uuid": "11.0.5",
     "zod": "3.24.3"
   },
   "devDependencies": {
@@ -84,14 +86,13 @@
     "jest-junit": "16.0.0",
     "jest-pnp-resolver": "1.2.3",
     "lint-staged": "^15.2.10",
-    "nodemon": "3.1.9",
     "prettier": "^3.3.3",
-    "reflect-metadata": "0.2.2",
     "semantic-release": "^24.2.0",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "2.0.0",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3"
   }
