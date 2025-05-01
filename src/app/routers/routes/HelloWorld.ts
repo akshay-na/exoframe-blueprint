@@ -6,7 +6,9 @@ import {
   ErrorMapping,
   Route,
   RouteDescription,
-} from "../../../lib/src/lib/decorators/Route";
+} from "@/lib/src/lib/decorators/Route";
+import { ZodUtils } from "@/lib/src/lib/zod/ZodUtils";
+import { UserData, userSchema } from "./schemas/HelloWorldBody";
 
 interface HelloResponse {
   message: string;
@@ -34,10 +36,10 @@ export class HelloWorld {
   @Endpoint("POST")
   @Configuration({ access: "PUBLIC", auth: "NONE" })
   @ArgumentMapping(["$body"])
-  @ErrorMapping({ NOT_AUTHORIZED: 404 })
-  public async postHello(): Promise<HelloResponse> {
+  @ErrorMapping({ VALIDATION_FAILED: 400 })
+  public async postHello(data: UserData): Promise<HelloResponse> {
     try {
-      console.log("🚀 ~ HelloWorld ~ postHello ~ Hello World!:");
+      ZodUtils.parse(userSchema, data);
       return { message: "POSTED" };
     } catch (error: any) {
       switch (error.id) {

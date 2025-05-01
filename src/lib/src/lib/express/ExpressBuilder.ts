@@ -83,7 +83,7 @@ export class ExpressBuilder {
 
             sendEnvelope(req, res, status, {
               error: key,
-              message: err?.message,
+              info: err?.info,
             });
           }
         };
