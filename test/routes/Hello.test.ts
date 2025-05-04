@@ -1,15 +1,14 @@
-import App from "@/app/BoilerplateApp";
 import request from "supertest";
 
 describe("GET /api/v1/hello", () => {
   it("should respond with Hello World!", async () => {
-    const res = await request(App()).get("/api/v1/hello");
+    const res = await request(app).get("/api/v1/hello");
     expect(res.status).toBe(200);
     expect(res.body.data.message).toBe("Hello World!");
   });
 
   it("should handle invalid query parameter types gracefully", async () => {
-    const res = await request(App()).get("/api/v1/hello?name=1234");
+    const res = await request(app).get("/api/v1/hello?name=1234");
     expect(res.status).toBe(200);
     expect(res.body.data.message).toBe("Hello 1234!"); // Treating name as string, even if it's numeric
   });
@@ -17,13 +16,13 @@ describe("GET /api/v1/hello", () => {
 
 describe("GET /api/v1/hello?name=Akshay", () => {
   it("should respond with Hello Akshay!", async () => {
-    const res = await request(App()).get("/api/v1/hello?name=Akshay");
+    const res = await request(app).get("/api/v1/hello?name=Akshay");
     expect(res.status).toBe(200);
     expect(res.body.data.message).toBe("Hello Akshay!");
   });
 
   it("should respond with correct message for different name", async () => {
-    const res = await request(App()).get("/api/v1/hello?name=John");
+    const res = await request(app).get("/api/v1/hello?name=John");
     expect(res.status).toBe(200);
     expect(res.body.data.message).toBe("Hello John!");
   });
@@ -31,7 +30,7 @@ describe("GET /api/v1/hello?name=Akshay", () => {
 
 describe("POST /api/v1/hello", () => {
   it("should respond with POSTED", async () => {
-    const res = await request(App())
+    const res = await request(app)
       .post("/api/v1/hello")
       .send({
         id: "user123",
@@ -46,7 +45,7 @@ describe("POST /api/v1/hello", () => {
   });
 
   it("should respond with error when required fields are missing", async () => {
-    const res = await request(App())
+    const res = await request(app)
       .post("/api/v1/hello")
       .send({
         id: "user123", // Missing age, gender, location, and interests
@@ -57,7 +56,7 @@ describe("POST /api/v1/hello", () => {
   });
 
   it("should handle invalid body types gracefully", async () => {
-    const res = await request(App())
+    const res = await request(app)
       .post("/api/v1/hello")
       .send({
         id: "user123",
@@ -74,7 +73,7 @@ describe("POST /api/v1/hello", () => {
 
 describe("PUT /api/v1/hello/:name", () => {
   it("should respond with Hello Akshay!", async () => {
-    const res = await request(App())
+    const res = await request(app)
       .put("/api/v1/hello/Akshay")
       .send({
         body: {
@@ -91,7 +90,7 @@ describe("PUT /api/v1/hello/:name", () => {
   });
 
   it("should respond with error when missing required fields in body", async () => {
-    const res = await request(App())
+    const res = await request(app)
       .put("/api/v1/hello/Akshay")
       .send({
         body: { id: "user123" }, // Missing other required fields
@@ -102,7 +101,7 @@ describe("PUT /api/v1/hello/:name", () => {
   });
 
   it("should handle invalid data type in PUT request body", async () => {
-    const res = await request(App())
+    const res = await request(app)
       .put("/api/v1/hello/Akshay")
       .send({
         body: {
@@ -122,7 +121,7 @@ describe("PUT /api/v1/hello/:name", () => {
 describe("Performance tests", () => {
   it("should respond within 300ms for GET request", async () => {
     const start = Date.now();
-    const res = await request(App()).get("/api/v1/hello");
+    const res = await request(app).get("/api/v1/hello");
     const end = Date.now();
     expect(end - start).toBeLessThan(300); // Test response time under 300ms
     expect(res.status).toBe(200);
@@ -131,7 +130,7 @@ describe("Performance tests", () => {
 
 describe("Response structure validation", () => {
   it("should have the correct structure for GET /api/v1/hello", async () => {
-    const res = await request(App()).get("/api/v1/hello");
+    const res = await request(app).get("/api/v1/hello");
     expect(res.body).toHaveProperty("data");
     expect(res.body.data).toHaveProperty("message");
     expect(res.body.data.message).toBe("Hello World!");

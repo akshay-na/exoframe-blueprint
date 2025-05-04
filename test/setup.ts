@@ -5,18 +5,15 @@ import "@testing-library/jest-dom";
 import "jest-extended";
 import "tsconfig-paths/register";
 
-import { MongoMemoryServer } from "mongodb-memory-server";
-import mongoose from "mongoose";
+import Application from "@/app/App";
 
-let mongoServer: MongoMemoryServer;
+const application: Application = new Application();
+declare global {
+  var app: any;
+}
 
 beforeAll(async () => {
-  // Setup in-memory MongoDB for testing
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
-
-  // Connect mongoose to in-memory MongoDB
-  await mongoose.connect(mongoUri);
+  app = await application.initialize();
 
   // Additional setup like mocking external services can go here.
   // For example, mock API calls using 'nock', or mock external modules using 'jest.mock()'
@@ -29,11 +26,9 @@ beforeAll(async () => {
 
 afterAll(async () => {
   // Teardown after all tests are done
-  await mongoose.disconnect(); // Disconnect the mongoose connection
-  await mongoServer.stop(); // Stop the in-memory MongoDB server
-
   // Clean up global mocks (if needed)
   // jest.restoreAllMocks(); // Restore any mocked modules or services
+  await application.shutdown();
 });
 
 afterEach(() => {
