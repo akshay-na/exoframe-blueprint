@@ -19,7 +19,7 @@
 
   // Files Settings
   "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 1000,
+  "files.autoSaveDelay": 10000,
   "files.trimTrailingWhitespace": true,
 
   // Workbech Specific Settings
@@ -48,5 +48,5 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  "cSpell.words": ["akshay", "exoframe"]
+  "cSpell.words": ["akshay", "exoframe", "Reflectable"]
 }
