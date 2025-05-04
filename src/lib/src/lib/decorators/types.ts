@@ -1,17 +1,17 @@
-interface RouteOptions {
+export interface RouteOptions {
   version?: string;
 }
 
-interface EndpointOptions {
+export interface EndpointOptions {
   hints?: string[];
 }
 
-interface ConfigurationOptions {
+export interface ConfigurationOptions {
   access?: "PUBLIC" | "PROTECTED";
   auth?: "NONE" | "JWT";
   guard?: Record<string, unknown>;
 }
 
-interface ErrorMappingOptions {
+export interface ErrorMappingOptions {
   [errorCode: string]: number;
 }

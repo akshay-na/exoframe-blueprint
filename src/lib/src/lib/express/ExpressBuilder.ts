@@ -7,6 +7,7 @@ import express, {
   Response,
   Router,
 } from "express";
+import { Server } from "http";
 import { Environment, ENVIRONMENT } from "../common/Environment";
 import {
   META_ARGS,
@@ -15,9 +16,12 @@ import {
   META_ERRORS,
   META_ROUTE,
 } from "../decorators/Route";
+import { ConfigurationOptions, ErrorMappingOptions } from "../decorators/types";
 import { sendEnvelope } from "../http/ResponseFormatter";
 import { RouteRegistry } from "./RouteRegistry";
 import { applyGuards, resolveToken } from "./utils";
+
+export type { Express, Server };
 
 export class ExpressBuilder {
   public readonly app: Express;

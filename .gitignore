@@ -166,10 +166,3 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
-# Other miscellaneous files
-/.editorconfig
-/.dockerignore
-/.envrc
-/.prettierignore
-/.eslintignore
-/.browserslistrc

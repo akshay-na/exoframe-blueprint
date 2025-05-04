@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { ConfigurationOptions } from "../decorators/types";
 
 export function resolveToken(token: any, req: Request): unknown {
   if (typeof token === "object") {
@@ -24,6 +25,7 @@ export function resolveToken(token: any, req: Request): unknown {
     case "$headers":
       return req.headers;
     case "$files":
+      // @ts-ignore
       return req.files;
     default:
       return undefined;

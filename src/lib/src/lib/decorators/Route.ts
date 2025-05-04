@@ -1,5 +1,11 @@
 import { LooseObject } from "../common/LooseObject";
 import { RouteRegistry } from "../express/RouteRegistry";
+import {
+  ConfigurationOptions,
+  EndpointOptions,
+  ErrorMappingOptions,
+  RouteOptions,
+} from "./types";
 
 export const META_ROUTE = Symbol("route:meta");
 export const META_DESCRIPTION = Symbol("route:description");
