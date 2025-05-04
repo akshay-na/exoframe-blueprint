@@ -1,1 +1,14 @@
-pnpm run test:cov
+echo ""
+echo "🔍 Running test coverage before push..."
+
+if pnpm run test:cov; then
+  echo ""
+  echo "✅ Tests passed. Proceeding with push."
+  echo ""
+  exit 0
+else
+  echo ""
+  echo "❌ Tests failed. Push aborted."
+  echo ""
+  exit 1
+fi
