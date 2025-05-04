@@ -5,12 +5,12 @@
     "strict": true,
     "lib": ["ES2022", "dom"],
     "preserveSymlinks": true,
-    "isolatedModules": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "preserveConstEnums": true,
     "noUnusedLocals": false,
     "noImplicitReturns": true,
+    "composite": true,
     "noImplicitThis": true,
     "noUnusedParameters": false,
     "pretty": true,
@@ -18,7 +18,7 @@
     "paths": {
       "*": ["*", "node_modules/@types/*"],
       "@/*": ["src/*", "node_modules/@types/*"],
-      "@akshay-na/exoframe/*": ["src/lib/src/*"]
+      "@akshay-na/exoframe/*": ["packages/@akshay-na/exoframe/src/*"]
     },
     "types": ["node", "reflect-metadata"],
     "module": "commonjs",

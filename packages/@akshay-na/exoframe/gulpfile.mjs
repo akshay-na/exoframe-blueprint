@@ -9,6 +9,7 @@ import plumber from "gulp-plumber";
 import gulpRemember from "gulp-remember";
 import ts from "gulp-typescript";
 import uglify from "gulp-uglify";
+import merge from "merge-stream";
 
 // Determine environment (default is development)
 const isProduction = process.env.NODE_ENV === "production";
@@ -47,18 +48,23 @@ function typecheck() {
  * - Generates sourcemaps in development.
  * - Minifies the output in production.
  */
-function scripts() {
-  return tsProject
-    .src() // Uses the file globs from tsconfig.json
+function compile() {
+  const tsResult = tsProject
+    .src()
     .pipe(
       plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
     )
     .pipe(gulpCached("scripts"))
-    .pipe(tsProject())
-    .js // Get the JavaScript output
+    .pipe(tsProject());
+
+  const jsStream = tsResult.js
     .pipe(gulpRemember("scripts"))
     .pipe(uglify())
     .pipe(gulp.dest("dist"));
+
+  const dtsStream = tsResult.dts.pipe(gulp.dest("dist"));
+
+  return merge(jsStream, dtsStream);
 }
 
 /**
@@ -137,8 +143,8 @@ function format(done) {
 // Build-related tasks
 gulp.task("clean", clean);
 gulp.task("typecheck", typecheck);
-gulp.task("scripts", scripts);
-gulp.task("gitreport", gitReport);
+gulp.task("compile", compile);
+gulp.task("git-report", gitReport);
 
 // Deployment tasks
 gulp.task("publish", publishNpm);
@@ -148,8 +154,9 @@ gulp.task("semantic-release", semanticReleaseTask);
 gulp.task("format", format);
 
 // Composite tasks
-gulp.task("build", gulp.series("clean", "typecheck", "scripts"));
-gulp.task("release", gulp.series("build", "gitreport", "publish"));
+gulp.task("build", gulp.series("clean", "typecheck", "compile"));
+
+gulp.task("release", gulp.series("build", "git-report", "publish"));
 
 // Default task runs build
 gulp.task("default", gulp.series("build"));

@@ -4,6 +4,7 @@
   "description": "Private lib written over Express",
   "email": "akshayna04@gmail.com",
   "author": "akshay-na",
+  "private": true,
   "license": "MIT",
   "homepage": "https://github.com/akshay-na/express-js-template#readme",
   "repository": {
