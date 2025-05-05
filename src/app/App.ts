@@ -1,4 +1,5 @@
 import { ENVIRONMENT } from "@akshay-na/exoframe/lib/common/Environment";
+import { logger } from "@akshay-na/exoframe/lib/common/Logger";
 import { RuntimeError } from "@akshay-na/exoframe/lib/common/RuntimeError";
 import {
   Express,
@@ -46,7 +47,7 @@ export default class Application {
 
     const PORT = ENVIRONMENT.get("PORT") ?? 8888;
     Application.server = Application.application.listen(PORT, () => {
-      console.log(`API ready on: http://localhost:${PORT}`);
+      logger.info(`API ready on: http://localhost:${PORT}`);
     });
 
     process.on("SIGTERM", this.closeServer.bind(this, Application.application));

@@ -44,7 +44,11 @@
       "path": "cz-conventional-changelog"
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "pino": "9.6.0",
+    "pino-daily-rotate-file": "0.0.1",
+    "pino-pretty": "13.0.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",

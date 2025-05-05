@@ -18,6 +18,7 @@ import {
 } from "../decorators/Route";
 import { ConfigurationOptions, ErrorMappingOptions } from "../decorators/types";
 import { sendEnvelope } from "../http/ResponseFormatter";
+import { requestLoggerMiddleware } from "./RequestLogger";
 import { RouteRegistry } from "./RouteRegistry";
 import { applyGuards, resolveToken } from "./utils";
 
@@ -35,6 +36,7 @@ export class ExpressBuilder {
   }
 
   initialize(): Express {
+    this.app.use(requestLoggerMiddleware());
     this.app.use(express.json());
 
     for (const routeClass of RouteRegistry.instance.all()) {

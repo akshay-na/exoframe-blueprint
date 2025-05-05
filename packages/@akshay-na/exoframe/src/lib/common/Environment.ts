@@ -7,6 +7,7 @@ import fs from "fs";
 import { LooseObject } from "./LooseObject";
 
 import { InvalidValue } from "./errors";
+import { logger } from "./Logger";
 import { PathUtils } from "./PathUtils";
 import {
   EnvironmentType,
@@ -67,29 +68,29 @@ export class Environment {
 
   protected bootstrap(): boolean {
     // load the appropriate environment file
+    logger.info(`NODE_ENV = ${process.env.NODE_ENV}`);
     const envFile = PathUtils.path(`.env.${this.type}`);
     if (fs.existsSync(envFile)) {
-      console.info(`[Environment(${this.type})] USING '${envFile}' FILE`);
+      logger.info(`[Environment(${this.type})] USING '${envFile}' FILE`);
       dotenv.config({ path: envFile });
     } else if (fs.existsSync(".env")) {
-      console.info(`[Environment(${this.type})] USING '.env' FILE`);
+      logger.info(`[Environment(${this.type})] USING '.env' FILE`);
       dotenv.config({ path: ".env" });
     } else {
-      console.warn(`[Environment(${this.type})] NO ENVIRONMENT FILE LOCATED`);
+      logger.warn(`[Environment(${this.type})] NO ENVIRONMENT FILE LOCATED`);
     }
     this.isBootstrapped = true;
-    // dump the environment
     if (this.boolean("ENVIRONMENT_DEBUG") === true) this.debug();
     return this.isBootstrapped;
   }
 
   public debug(): void {
-    console.debug("ENVIRONMENT -------------------------------------------");
+    logger.debug("ENVIRONMENT -------------------------------------------");
     for (const key of Object.keys(process.env)) {
       if (key.startsWith("npm_")) continue;
-      console.debug(`[${key}]: ${process.env[key]}`);
+      logger.debug(`[${key}]: ${process.env[key]}`);
     }
-    console.debug("------------------------------------------------------");
+    logger.debug("------------------------------------------------------");
   }
 
   public get(name: string): string | undefined {
@@ -227,8 +228,9 @@ export class Environment {
   }
 }
 
-console.log("NODE_ENV =", process.env.NODE_ENV);
-export const ENVIRONMENT = new Environment({
+const ENVIRONMENT = new Environment({
   type: process.env.NODE_ENV as EnvironmentType | undefined,
   component: process.env.PLATFORM_COMPONENT as PlatformComponent | undefined,
 });
+
+export { ENVIRONMENT };
